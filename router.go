@@ -1,11 +1,11 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"dating-api/controllers"
+)
 
 func initializeRoutes() {
-	router.GET("/ping", func(context *gin.Context) {
-		context.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	pingController := new(controllers.PingController)
+
+	router.GET("/ping", pingController.Ping)
 }
