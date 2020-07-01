@@ -9,5 +9,5 @@ func main() {
 
 	initializeRoutes()
 
-	router.Run(":8000")
+	_ = router.Run(":8000")
 }
