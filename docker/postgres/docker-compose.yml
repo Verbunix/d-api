@@ -14,13 +14,5 @@ services:
       - postgres-data:/var/lib/postgresql/data
     restart: unless-stopped
 
-  dating-api:
-    build: ../.
-    container_name: dating-api-golang
-    ports:
-      - "8000:8000"
-    links:
-      - postgres
-
 volumes:
   postgres-data:
