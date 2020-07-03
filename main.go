@@ -1,6 +1,11 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"os"
+
+	"github.com/gin-gonic/gin"
+	_ "github.com/joho/godotenv/autoload"
+)
 
 var router *gin.Engine
 
@@ -9,5 +14,6 @@ func main() {
 
 	initializeRoutes()
 
-	_ = router.Run(":8000")
+	port := os.Getenv("PORT")
+	_ = router.Run(":" + port)
 }
