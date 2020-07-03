@@ -8,7 +8,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var db *gorm.DB //database
+var db *gorm.DB //Database
 
 func init() {
 	dbUser := os.Getenv("DB_USER")
@@ -17,8 +17,12 @@ func init() {
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 
-	dbUri := fmt.Sprintf("host=%s user=%s port=%s dbname=%s sslmode=disable password=%s", dbHost, dbUser, dbPort, dbName, dbPass) //Build connection string
-	fmt.Println(dbUri)
+	//Build connection string
+	var dbUri = fmt.Sprintf(
+		"host=%s user=%s port=%s dbname=%s sslmode=disable password=%s",
+		dbHost, dbUser, dbPort, dbName, dbPass,
+	)
+	fmt.Println("dbUri: \t", dbUri)
 
 	conn, err := gorm.Open("postgres", dbUri)
 	if err != nil {
@@ -28,7 +32,7 @@ func init() {
 	db = conn
 }
 
-//returns a handle to the DB object
+//Returns a handle to the DB object
 func GetDB() *gorm.DB {
 	return db
 }
