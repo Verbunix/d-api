@@ -1,8 +1,6 @@
 package main
 
-import (
-	"dating-api/controllers"
-)
+import "dating-api/controllers"
 
 func initializeRoutes() {
 	pingController := new(controllers.PingController)

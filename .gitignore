@@ -21,3 +21,7 @@ app
 
 #env files
 .env
+
+#dbs
+docker/postgres/postgres-data/
+docker/postgres-data/

@@ -1,16 +1,17 @@
 package controllers
 
 import (
+	"dating-api/databases"
 	"dating-api/models"
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type UsersController struct{}
 
 func (u UsersController) FindUsers(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
+	db := databases.GetDb()
 	var users []models.User
 	db.Find(&users)
 	c.JSON(http.StatusOK, gin.H{"data": users})

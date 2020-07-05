@@ -8,7 +8,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var db *gorm.DB //Database
+var postgresDb *gorm.DB //Database
 
 func init() {
 	dbUser := os.Getenv("DB_USER")
@@ -29,10 +29,10 @@ func init() {
 		fmt.Print(err)
 	}
 
-	db = conn
+	postgresDb = conn
 }
 
 //Returns a handle to the DB object
-func GetDB() *gorm.DB {
-	return db
+func GetDb() *gorm.DB {
+	return postgresDb
 }
