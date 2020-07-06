@@ -1,0 +1,11 @@
+postgres:
+  dialect: postgres
+  datasource: host=${DB_HOST} dbname=${DB_NAME} user=${DB_USER} password=${DB_PASS} sslmode=required
+  dir: migrations
+  table: migrations
+
+local:
+  dialect: postgres
+  datasource: host=127.0.0.1 port=8001 dbname=dating-api user=postgres password=postgresGOLANG sslmode=disable
+  dir: migrations
+  table: migrations

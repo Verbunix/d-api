@@ -12,7 +12,13 @@ services:
       POSTGRES_DB: dating-api
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - public
     restart: unless-stopped
 
 volumes:
   postgres-data:
+networks:
+  public:
+    external:
+      name: public

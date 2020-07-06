@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+docker network create public
+
 set -e
 
 ENV=${ENV:-local}

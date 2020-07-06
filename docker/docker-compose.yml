@@ -12,6 +12,8 @@ services:
       POSTGRES_DB: dating-api
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - public
     restart: unless-stopped
 
   dating-api:
@@ -19,8 +21,14 @@ services:
     container_name: dating-api-golang
     ports:
       - "8000:8000"
+    networks:
+      - public
     links:
       - postgres
 
 volumes:
   postgres-data:
+networks:
+  public:
+    external:
+      name: public
