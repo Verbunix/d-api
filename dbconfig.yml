@@ -1,6 +1,6 @@
-postgres:
+production:
   dialect: postgres
-  datasource: host=${DB_HOST} dbname=${DB_NAME} user=${DB_USER} password=${DB_PASS} sslmode=required
+  datasource: host=${DB_HOST} dbname=${DB_NAME} user=${DB_USER} password=${DB_PASS} sslmode=disable
   dir: migrations
   table: migrations
 
