@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"dating-api/databases"
-	"dating-api/models"
+	"../databases"
+	"../models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
