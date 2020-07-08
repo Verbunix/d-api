@@ -10,5 +10,6 @@ func initializeRoutes() {
 	{
 		usersController := new(controllers.UsersController)
 		userGroup.GET("", usersController.FindUsers)
+		userGroup.POST("", usersController.CreateUsers)
 	}
 }

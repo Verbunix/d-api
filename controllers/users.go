@@ -1,19 +1,23 @@
 package controllers
 
 import (
-	"net/http"
-
-	"dating-api/databases"
 	"dating-api/models"
-
+	"dating-api/services"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type UsersController struct{}
 
 func (u UsersController) FindUsers(c *gin.Context) {
-	db := databases.GetDb()
-	var users []models.User
-	db.Find(&users)
-	c.JSON(http.StatusOK, gin.H{"data": users})
+	findUsers := services.FindUsers()
+	c.JSON(http.StatusOK, findUsers)
+}
+
+func (u UsersController) CreateUsers(c *gin.Context) {
+	var input models.CreateUser
+
+	_ = c.BindJSON(&input)
+	createUser := services.CreateUser(input)
+	c.JSON(http.StatusOK, createUser)
 }
