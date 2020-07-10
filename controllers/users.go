@@ -18,6 +18,9 @@ func (u UsersController) CreateUsers(c *gin.Context) {
 	var input models.CreateUser
 
 	_ = c.BindJSON(&input)
-	createUser := services.CreateUser(input)
+	err, createUser := services.CreateUser(input)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+	}
 	c.JSON(http.StatusOK, createUser)
 }

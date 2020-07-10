@@ -12,9 +12,9 @@ func FindUsers() []models.User {
 	return users
 }
 
-func CreateUser(payload models.CreateUser) models.User {
+func CreateUser(payload models.CreateUser) (err error, user models.User) {
 	db := databases.GetDb()
-	user := models.User{Email: payload.Email, Name: payload.Name}
-	db.Create(&user)
-	return user
+	user = models.User{Email: payload.Email, Name: payload.Name}
+	err = db.Create(&user).Error
+	return err, user
 }
