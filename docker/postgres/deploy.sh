@@ -1,4 +1,4 @@
-docker network create public
+#docker network create public || true
 
 docker-compose kill
 docker-compose rm -f

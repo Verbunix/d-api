@@ -12,6 +12,12 @@ func FindUsers() []models.User {
 	return users
 }
 
+func FindByIdUser(userId uint) (err error, user models.User) {
+	db := databases.GetDb()
+	err = db.First(&user, userId).Error
+	return err, user
+}
+
 func CreateUser(payload models.CreateUser) (err error, user models.User) {
 	db := databases.GetDb()
 	user = models.User{Email: payload.Email, Name: payload.Name}

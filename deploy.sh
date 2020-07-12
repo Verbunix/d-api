@@ -5,7 +5,7 @@ set -e
 ENV=${ENV:-local}
 echo "ENV: ${ENV}"
 
-docker network create public
+#docker network create public || true
 cd docker
 
 if [ "$BUILD" = 1 ]

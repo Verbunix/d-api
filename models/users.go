@@ -16,3 +16,6 @@ type UpdateUser struct {
 	Email string `json:"email"`
 	Name  string `json:"name"`
 }
+type FindByIdUser struct {
+	ID uint `json:"id" binding:"required"`
+}
