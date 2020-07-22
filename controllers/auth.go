@@ -7,10 +7,10 @@ import (
 
 type AuthController struct{}
 
-func (u UsersController) Login(c *gin.Context) {
+func (u AuthController) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, "")
 }
 
-func (u UsersController) SignIn(c *gin.Context) {
+func (u AuthController) SignIn(c *gin.Context) {
 	c.JSON(http.StatusOK, "")
 }
