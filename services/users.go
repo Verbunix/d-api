@@ -12,9 +12,15 @@ func FindUsers() []models.User {
 	return users
 }
 
-func FindByIdUser(userId uint) (err error, user models.User) {
+func FindUserById(userId uint) (err error, user models.User) {
 	db := databases.GetDb()
 	err = db.First(&user, userId).Error
+	return err, user
+}
+
+func FindUserByEmail(email string) (err error, user models.User) {
+	db := databases.GetDb()
+	err = db.Where(&models.User{Email: email}).First(&user).Error
 	return err, user
 }
 

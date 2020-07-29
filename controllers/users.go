@@ -32,7 +32,7 @@ func (u UsersController) FindByIdUser(c *gin.Context) {
 		return
 	}
 
-	err, user := services.FindByIdUser(findByIdUser.ID)
+	err, user := services.FindUserById(findByIdUser.ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return

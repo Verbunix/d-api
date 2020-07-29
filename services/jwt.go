@@ -1,6 +1,9 @@
 package services
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
 	"github.com/dgrijalva/jwt-go"
 	"os"
 	"time"
@@ -20,4 +23,11 @@ func CreateToken(userId uint) (string, error) {
 	}
 
 	return token, nil
+}
+
+func CreateShaHash(str string) string {
+	key := []byte(str)
+	h := hmac.New(sha256.New, key)
+	h.Write([]byte(os.Getenv("PASSWORD_SALT")))
+	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
