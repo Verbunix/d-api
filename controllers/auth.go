@@ -39,5 +39,23 @@ func (ac AuthController) Login(c *gin.Context) {
 }
 
 func (ac AuthController) SignIn(c *gin.Context) {
-	c.JSON(http.StatusOK, "")
+	var singinUser models.SigninUser
+	var createUser models.CreateUser
+
+	if err := c.ShouldBindJSON(&singinUser); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
+		return
+	}
+	createUser.Email = singinUser.Email
+	createUser.Name = singinUser.Name
+
+	err, u := services.CreateUser(createUser)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+
+	//TODO: create token and update user
+
+	c.JSON(http.StatusOK, u)
 }

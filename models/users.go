@@ -20,12 +20,18 @@ type UpdateUser struct {
 	Name         string `json:"name"`
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
+	Password     string `json:"password"`
 }
 type FindByIdUser struct {
 	ID   uint   `json:"id" binding:"required"`
 	Name string `json:"name"`
 }
 type LoginUser struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+type SigninUser struct {
+	Email    string `json:"email" binding:"required"`
+	Name     string `json:"name" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
