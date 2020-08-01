@@ -12,6 +12,7 @@ func initializeRoutes() {
 		userGroup.GET("", usersController.FindUsers)
 		userGroup.GET("/:id", usersController.FindByIdUser)
 		userGroup.POST("", usersController.CreateUsers)
+		userGroup.PATCH("", usersController.UpdateUser)
 	}
 
 	authController := new(controllers.AuthController)

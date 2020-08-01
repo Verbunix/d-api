@@ -16,6 +16,7 @@ type CreateUser struct {
 	Name  string `json:"name" binding:"required"`
 }
 type UpdateUser struct {
+	ID           uint   `json:"id" binding:"required"`
 	Email        string `json:"email"`
 	Name         string `json:"name"`
 	AccessToken  string `json:"access_token"`
@@ -24,7 +25,6 @@ type UpdateUser struct {
 }
 type FindByIdUser struct {
 	ID   uint   `json:"id" binding:"required"`
-	Name string `json:"name"`
 }
 type LoginUser struct {
 	Email    string `json:"email" binding:"required"`

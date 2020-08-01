@@ -30,3 +30,14 @@ func CreateUser(payload models.CreateUser) (err error, user models.User) {
 	err = db.Create(&user).Error
 	return err, user
 }
+
+func UpdateUser(payload models.UpdateUser) (err error, user models.User) {
+	db := databases.GetDb()
+	err = db.First(&user, payload.ID).Error
+	if err != nil {
+		return err, user
+	}
+
+	err = db.Model(&user).Update(payload).Error
+	return err, user
+}

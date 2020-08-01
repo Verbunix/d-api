@@ -44,10 +44,26 @@ func (u UsersController) CreateUsers(c *gin.Context) {
 	var input models.CreateUser
 
 	_ = c.BindJSON(&input)
-	err, createUser := services.CreateUser(input)
+	err, user := services.CreateUser(input)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
+
+func (u UsersController) UpdateUser(c *gin.Context) {
+	var input models.UpdateUser
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
+		return
+	}
+
+	err, user := services.UpdateUser(input)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
-	c.JSON(http.StatusOK, createUser)
+	c.JSON(http.StatusOK, user)
 }
