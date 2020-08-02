@@ -10,7 +10,7 @@ import (
 )
 
 //Creating Access Token
-func CreateToken(userId uint) (string, error) {
+func CreateToken(userId uint) (error, string) {
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
 	atClaims["user_id"] = userId
@@ -19,10 +19,10 @@ func CreateToken(userId uint) (string, error) {
 
 	token, err := at.SignedString([]byte(os.Getenv("ACCESS_SECRET")))
 	if err != nil {
-		return "", err
+		return err, ""
 	}
 
-	return token, nil
+	return nil, token
 }
 
 func CreateShaHash(str string) string {

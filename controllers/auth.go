@@ -30,7 +30,7 @@ func (ac AuthController) Login(c *gin.Context) {
 		return
 	}
 
-	token, err := services.CreateToken(user.ID)
+	err, token := services.CreateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
 		return
@@ -39,15 +39,15 @@ func (ac AuthController) Login(c *gin.Context) {
 }
 
 func (ac AuthController) SignIn(c *gin.Context) {
-	var singinUser models.SigninUser
+	var signinUser models.SigninUser
 	var createUser models.CreateUser
 
-	if err := c.ShouldBindJSON(&singinUser); err != nil {
+	if err := c.ShouldBindJSON(&signinUser); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
 		return
 	}
-	createUser.Email = singinUser.Email
-	createUser.Name = singinUser.Name
+	createUser.Email = signinUser.Email
+	createUser.Name = signinUser.Name
 
 	err, u := services.CreateUser(createUser)
 	if err != nil {
@@ -55,7 +55,17 @@ func (ac AuthController) SignIn(c *gin.Context) {
 		return
 	}
 
-	//TODO: create token and update user
+	err, token := services.CreateToken(u.ID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
 
-	c.JSON(http.StatusOK, u)
+	err, uUpdated := services.UpdateUser(models.UpdateUser{ID: u.ID, Password: token})
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, uUpdated)
 }
