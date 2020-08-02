@@ -40,28 +40,23 @@ func (ac AuthController) Login(c *gin.Context) {
 
 func (ac AuthController) SignIn(c *gin.Context) {
 	var signinUser models.SigninUser
-	var createUser models.CreateUser
 
 	if err := c.ShouldBindJSON(&signinUser); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
 		return
 	}
-	createUser.Email = signinUser.Email
-	createUser.Name = signinUser.Name
 
-	err, u := services.CreateUser(createUser)
+	err, u := services.CreateUser(models.CreateUser{Email: signinUser.Email, Name: signinUser.Name})
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	err, token := services.CreateToken(u.ID)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
-	}
+	//get sha256 from request password
+	hash := services.CreateShaHash(signinUser.Password)
 
-	err, uUpdated := services.UpdateUser(models.UpdateUser{ID: u.ID, Password: token})
+	//update user and save password hash
+	err, uUpdated := services.UpdateUser(models.UpdateUser{ID: u.ID, Password: hash})
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
