@@ -3,9 +3,10 @@ package controllers
 import (
 	"dating-api/models"
 	"dating-api/services"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 type UsersController struct{}
@@ -23,9 +24,7 @@ func (u UsersController) FindByIdUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": err})
 		return
 	}
-
-	userId := uint(userIdU64)
-	findByIdUser.ID = userId
+	findByIdUser.ID = uint(userIdU64)
 
 	if err := c.ShouldBindUri(&findByIdUser); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": err})
@@ -66,4 +65,27 @@ func (u UsersController) UpdateUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, user)
+}
+
+func (u UsersController) DeleteUser(c *gin.Context) {
+	var findByIdUser models.FindByIdUser
+
+	userIdU64, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": err})
+		return
+	}
+	findByIdUser.ID = uint(userIdU64)
+
+	if err := c.ShouldBindUri(&findByIdUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": err})
+		return
+	}
+
+	err, _ = services.DeleteUser(findByIdUser.ID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	c.JSON(http.StatusOK, "User deleted successfully")
 }

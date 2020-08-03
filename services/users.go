@@ -41,3 +41,9 @@ func UpdateUser(payload models.UpdateUser) (err error, user models.User) {
 	err = db.Model(&user).Update(payload).Error
 	return err, user
 }
+
+func DeleteUser(userId uint) (err error, user models.User) {
+	db := databases.GetDb()
+	err = db.Where(&models.User{ID: userId}).Delete(&user).Error
+	return err, user
+}
