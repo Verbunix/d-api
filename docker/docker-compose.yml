@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: postgresGOLANG
       POSTGRES_DB: dating-api
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     restart: unless-stopped
 
   dating-api:
@@ -23,6 +23,4 @@ services:
       - public
     links:
       - postgres
-
-volumes:
-  postgres-data:
+    restart: unless-stopped
