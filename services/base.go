@@ -1,9 +1,10 @@
 package services
 
 import (
-	"dating-api/models"
-	"github.com/jinzhu/gorm"
+	"d-api/models"
 	"reflect"
+
+	"github.com/jinzhu/gorm"
 )
 
 type IService interface{}

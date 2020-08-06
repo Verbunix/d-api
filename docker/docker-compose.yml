@@ -2,21 +2,21 @@ version: "3"
 services:
   postgres:
     image: postgres:12
-    container_name: dating-api-postgres
+    container_name: d-api-postgres
     hostname: postgres
     ports:
       - "8001:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgresGOLANG
-      POSTGRES_DB: dating-api
+      POSTGRES_DB: d-api
     volumes:
       - /var/lib/postgresql/data
     restart: unless-stopped
 
-  dating-api:
+  d-api:
     build: ../.
-    container_name: dating-api-golang
+    container_name: d-api-golang
     ports:
       - "8000:8000"
     networks:

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"dating-api/models"
-	"dating-api/services"
+	"d-api/models"
+	"d-api/services"
 	"net/http"
 	"strconv"
 

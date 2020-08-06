@@ -1,8 +1,8 @@
 package services
 
 import (
-	"dating-api/databases"
-	"dating-api/models"
+	"d-api/databases"
+	"d-api/models"
 )
 
 func FindUsers() []models.User {

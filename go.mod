@@ -1,4 +1,4 @@
-module dating-api
+module d-api
 
 go 1.14
 

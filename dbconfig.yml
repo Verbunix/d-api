@@ -6,6 +6,6 @@ production:
 
 local:
   dialect: postgres
-  datasource: host=127.0.0.1 port=8001 dbname=dating-api user=postgres password=postgresGOLANG sslmode=disable
+  datasource: host=127.0.0.1 port=8001 dbname=d-api user=postgres password=postgresGOLANG sslmode=disable
   dir: migrations
   table: migrations

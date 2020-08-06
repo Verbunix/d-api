@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"dating-api/models"
-	"dating-api/services"
-	"github.com/gin-gonic/gin"
+	"d-api/models"
+	"d-api/services"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type AuthController struct{}
