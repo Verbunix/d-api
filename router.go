@@ -1,19 +1,23 @@
 package main
 
-import "d-api/controllers"
+import (
+	"d-api/controllers"
+	"d-api/middlewares"
+)
 
 func initializeRoutes() {
 	pingController := new(controllers.PingController)
 	router.GET("/ping", pingController.Ping)
+	auth := middlewares.JwtTokenAuthMiddleware()
 
 	userGroup := router.Group("users")
 	{
 		usersController := new(controllers.UsersController)
-		userGroup.GET("", usersController.FindUsers)
-		userGroup.GET("/:id", usersController.FindByIdUser)
-		userGroup.POST("", usersController.CreateUsers)
-		userGroup.PATCH("", usersController.UpdateUser)
-		userGroup.DELETE("/:id", usersController.DeleteUser)
+		userGroup.GET("", auth, usersController.FindUsers)
+		userGroup.GET("/:id", auth, usersController.FindByIdUser)
+		userGroup.POST("", auth, usersController.CreateUsers)
+		userGroup.PATCH("", auth, usersController.UpdateUser)
+		userGroup.DELETE("/:id", auth, usersController.DeleteUser)
 	}
 
 	authController := new(controllers.AuthController)

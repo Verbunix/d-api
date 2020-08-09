@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"os"
 	"time"
@@ -30,4 +31,34 @@ func CreateShaHash(str string) string {
 	h := hmac.New(sha256.New, key)
 	h.Write([]byte(os.Getenv("PASSWORD_SALT")))
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+}
+
+// Validate, and return a token.
+// Will receive the parsed token and should return the key for validating.
+func VerifyToken(tokenString string) (error, *jwt.Token) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(os.Getenv("ACCESS_SECRET")), nil
+	})
+
+	if err != nil {
+		return err, nil
+	}
+
+	return nil, token
+}
+
+func TokenValidation(tokenString string) error {
+	err, token := VerifyToken(tokenString)
+	if err != nil {
+		return err
+	}
+
+	if _, ok := token.Claims.(jwt.Claims); !ok || !token.Valid {
+		return err
+	}
+
+	return nil
 }
