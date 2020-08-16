@@ -1,3 +1,8 @@
 #!/usr/bin/env sh
 
-clear && go build -o app . && ./app
+set -e
+
+ENV=${ENV:-local}
+
+cd _deployment/
+./deploy.sh
