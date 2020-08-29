@@ -1,11 +1,12 @@
-version: "3"
+version: '3'
 services:
+
   postgres:
-    image: postgres:12
     container_name: d-api-postgres
+    image: postgres:latest
     hostname: postgres
     ports:
-      - "8001:5432"
+      - 8001:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgresGOLANG
@@ -13,5 +14,8 @@ services:
     volumes:
       - /var/lib/postgresql/data
 
-volumes:
-  postgres-data:
+  adminer:
+    container_name: d-api-adminer
+    image: adminer
+    ports:
+      - 8002:8080

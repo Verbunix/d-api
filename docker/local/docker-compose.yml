@@ -1,11 +1,12 @@
-version: "3"
+version: '3'
 services:
+
   postgres:
-    image: postgres:12
     container_name: d-api-postgres
+    image: postgres:latest
     hostname: postgres
     ports:
-      - "8001:5432"
+      - 8001:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgresGOLANG
@@ -14,13 +15,17 @@ services:
       - /var/lib/postgresql/data
     restart: unless-stopped
 
-  d-api:
-    build: ../.
-    container_name: d-api-golang
+  adminer:
+    container_name: d-api-adminer
+    image: adminer
     ports:
-      - "8000:8000"
-    networks:
-      - public
+      - 8002:8080
+
+  d-api:
+    container_name: d-api-golang
+    build: ../../.
+    ports:
+      - 8000:8000
     links:
       - postgres
     restart: unless-stopped

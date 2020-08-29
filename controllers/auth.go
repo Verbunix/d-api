@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"d-api/models"
-	"d-api/services"
+	"d-api/services/jwt"
 	"d-api/services/users"
 	"net/http"
 
@@ -24,7 +24,7 @@ func (ac AuthController) Login(c *gin.Context) {
 	}
 
 	//get sha256 from request password
-	hash := services.CreateShaHash(u.Password)
+	hash := jwt.CreateShaHash(u.Password)
 
 	//compare the user from the request, with user from db:
 	if user.Email != u.Email || user.Password != hash {
@@ -32,7 +32,7 @@ func (ac AuthController) Login(c *gin.Context) {
 		return
 	}
 
-	err, token := services.CreateToken(user.ID)
+	err, token := jwt.CreateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
 		return
@@ -55,7 +55,7 @@ func (ac AuthController) SignIn(c *gin.Context) {
 	}
 
 	//get sha256 from request password
-	hash := services.CreateShaHash(signinUser.Password)
+	hash := jwt.CreateShaHash(signinUser.Password)
 
 	//update user and save password hash
 	err, uUpdated := users.Update(models.UpdateUser{ID: u.ID, Password: hash})

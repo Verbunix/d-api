@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-docker network create public
 
 set -e
 
@@ -13,4 +12,4 @@ ENV: ${ENV}
 docker-compose --project-name $PROJECT_NAME -f $COMPOSE_FILE kill
 docker-compose --project-name $PROJECT_NAME -f $COMPOSE_FILE rm -f
 docker-compose --project-name $PROJECT_NAME -f $COMPOSE_FILE pull
-docker-compose --project-name $PROJECT_NAME -f $COMPOSE_FILE up
+docker-compose --project-name $PROJECT_NAME -f $COMPOSE_FILE up --build
