@@ -1,37 +1,37 @@
-package services
+package users
 
 import (
 	"d-api/databases"
 	"d-api/models"
 )
 
-func FindUsers() []models.User {
+func FindAll() []models.User {
 	db := databases.GetDb()
 	var users []models.User
 	db.Find(&users)
 	return users
 }
 
-func FindUserById(userId uint) (err error, user models.User) {
+func FindById(userId uint) (err error, user models.User) {
 	db := databases.GetDb()
 	err = db.First(&user, userId).Error
 	return err, user
 }
 
-func FindUserByEmail(email string) (err error, user models.User) {
+func FindByEmail(email string) (err error, user models.User) {
 	db := databases.GetDb()
 	err = db.Where(&models.User{Email: email}).First(&user).Error
 	return err, user
 }
 
-func CreateUser(payload models.CreateUser) (err error, user models.User) {
+func Create(payload models.CreateUser) (err error, user models.User) {
 	db := databases.GetDb()
 	user = models.User{Email: payload.Email, Name: payload.Name}
 	err = db.Create(&user).Error
 	return err, user
 }
 
-func UpdateUser(payload models.UpdateUser) (err error, user models.User) {
+func Update(payload models.UpdateUser) (err error, user models.User) {
 	db := databases.GetDb()
 	err = db.First(&user, payload.ID).Error
 	if err != nil {
@@ -42,7 +42,7 @@ func UpdateUser(payload models.UpdateUser) (err error, user models.User) {
 	return err, user
 }
 
-func DeleteUser(userId uint) (err error, user models.User) {
+func Delete(userId uint) (err error, user models.User) {
 	db := databases.GetDb()
 	err = db.Where(&models.User{ID: userId}).Delete(&user).Error
 	return err, user

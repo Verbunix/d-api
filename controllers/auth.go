@@ -3,6 +3,7 @@ package controllers
 import (
 	"d-api/models"
 	"d-api/services"
+	"d-api/services/users"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,7 @@ func (ac AuthController) Login(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
 		return
 	}
-	err, user := services.FindUserByEmail(u.Email)
+	err, user := users.FindByEmail(u.Email)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -47,7 +48,7 @@ func (ac AuthController) SignIn(c *gin.Context) {
 		return
 	}
 
-	err, u := services.CreateUser(models.CreateUser{Email: signinUser.Email, Name: signinUser.Name})
+	err, u := users.Create(models.CreateUser{Email: signinUser.Email, Name: signinUser.Name})
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -57,7 +58,7 @@ func (ac AuthController) SignIn(c *gin.Context) {
 	hash := services.CreateShaHash(signinUser.Password)
 
 	//update user and save password hash
-	err, uUpdated := services.UpdateUser(models.UpdateUser{ID: u.ID, Password: hash})
+	err, uUpdated := users.Update(models.UpdateUser{ID: u.ID, Password: hash})
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return

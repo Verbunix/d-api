@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"d-api/models"
-	"d-api/services"
+	"d-api/services/users"
 	"net/http"
 	"strconv"
 
@@ -12,7 +12,7 @@ import (
 type UsersController struct{}
 
 func (u UsersController) FindUsers(c *gin.Context) {
-	findUsers := services.FindUsers()
+	findUsers := users.FindAll()
 	c.JSON(http.StatusOK, findUsers)
 }
 
@@ -31,7 +31,7 @@ func (u UsersController) FindByIdUser(c *gin.Context) {
 		return
 	}
 
-	err, user := services.FindUserById(findByIdUser.ID)
+	err, user := users.FindById(findByIdUser.ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -43,7 +43,7 @@ func (u UsersController) CreateUsers(c *gin.Context) {
 	var input models.CreateUser
 
 	_ = c.BindJSON(&input)
-	err, user := services.CreateUser(input)
+	err, user := users.Create(input)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
 		return
@@ -59,7 +59,7 @@ func (u UsersController) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	err, user := services.UpdateUser(input)
+	err, user := users.Update(input)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
@@ -82,7 +82,7 @@ func (u UsersController) DeleteUser(c *gin.Context) {
 		return
 	}
 
-	err, _ = services.DeleteUser(findByIdUser.ID)
+	err, _ = users.Delete(findByIdUser.ID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err)
 		return
