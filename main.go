@@ -1,6 +1,7 @@
 package main
 
 import (
+	"d-api/migrations"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,9 @@ import (
 var router *gin.Engine
 
 func main() {
+	m := new(migrations.Migrations)
+	m.Sync()
+
 	router = gin.Default()
 
 	initializeRoutes()
