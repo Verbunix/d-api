@@ -15,8 +15,8 @@ type CrudService struct {
 	Repository ICrudRepository
 }
 
-func NewCrudService(repository ICrudRepository, logger ILogger) *CrudService {
-	service := NewBaseService(repository, logger)
+func NewCrudService(repository ICrudRepository) *CrudService {
+	service := NewService(repository)
 	return &CrudService{service, repository}
 }
 

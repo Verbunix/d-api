@@ -18,14 +18,14 @@ type ICrudRepository interface {
 type CrudRepository struct {
 	ICrudRepository
 	*Repository
-	Model            IEntity // Dynamic typing
+	Model IEntity // Dynamic typing
 }
 
-func NewCrudRepository(db *gorm.DB, model IEntity, logger ILogger) *CrudRepository {
-	repo := NewRepository(db, logger)
+func NewCrudRepository(db *gorm.DB, model IEntity) *CrudRepository {
+	repo := NewRepository(db)
 	return &CrudRepository{
-		Repository:       repo,
-		Model:            model,
+		Repository: repo,
+		Model:      model,
 	}
 }
 
