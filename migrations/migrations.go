@@ -3,9 +3,10 @@ package migrations
 import (
 	"database/sql"
 	"fmt"
-	migrate "github.com/rubenv/sql-migrate"
 	"os"
 	"strconv"
+
+	migrate "github.com/rubenv/sql-migrate"
 )
 
 type Migrations struct{}
@@ -24,7 +25,7 @@ type Database struct {
 
 func (d *Database) Open() {
 	psqlInfo := fmt.Sprintf(
-		"host=%s port=%d user=%s "+"password=%s dbname=%s",
+		"host=%s port=%d user=%s password=%s dbname=%s",
 		d.host,
 		d.port,
 		d.user,
