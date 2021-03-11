@@ -6,9 +6,10 @@ import (
 )
 
 func initializeRoutes() {
+	auth := middlewares.JwtTokenAuthMiddleware()
+
 	pingController := new(controllers.PingController)
 	router.GET("/ping", pingController.Ping)
-	auth := middlewares.JwtTokenAuthMiddleware()
 
 	userGroup := router.Group("users")
 	{
