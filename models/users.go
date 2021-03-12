@@ -10,6 +10,7 @@ type User struct {
 	AccessToken  string    `json:"access_token"`
 	RefreshToken string    `json:"refresh_token"`
 	Password     string    `json:"password"`
+	Role         string    `json:"role" gorm:"default:user"`
 }
 type CreateUser struct {
 	Email string `json:"email" binding:"required"`
@@ -22,6 +23,7 @@ type UpdateUser struct {
 	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
 	Password     string `json:"password"`
+	Role         string `json:"role" gorm:"default:user"`
 }
 type FindByIdUser struct {
 	ID uint `json:"id" binding:"required"`
