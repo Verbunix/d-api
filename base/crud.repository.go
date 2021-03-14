@@ -1,8 +1,9 @@
 package base
 
 import (
-	"github.com/jinzhu/gorm"
 	"reflect"
+
+	"gorm.io/gorm"
 )
 
 type ICrudRepository interface {

@@ -1,6 +1,6 @@
 package base
 
-import "github.com/jinzhu/gorm"
+import "gorm.io/gorm"
 
 type IRepository interface {
 }
