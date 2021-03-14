@@ -33,7 +33,7 @@ func (d *Database) Open() {
 		d.dbname,
 	)
 	if d.ssl == "disable" {
-		psqlInfo = psqlInfo + "sslmode=disable"
+		psqlInfo = psqlInfo + " " + "sslmode=disable"
 	}
 	db, err := sql.Open("postgres", psqlInfo)
 	checkError(err)

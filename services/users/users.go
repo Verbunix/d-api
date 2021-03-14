@@ -3,6 +3,8 @@ package users
 import (
 	"d-api/databases"
 	"d-api/models"
+	"encoding/json"
+	"fmt"
 )
 
 func FindAll() []models.User {
@@ -38,7 +40,18 @@ func Update(payload models.UpdateUser) (err error, user models.User) {
 		return err, user
 	}
 
-	err = db.Model(&user).Update(payload).Error
+	var m map[string]interface{}
+	inrec, _ := json.Marshal(payload)
+	json.Unmarshal(inrec, &m)
+	// iterate through inrecs
+	for field, val := range m {
+		if val == nil || val == "" {
+			fmt.Println(field, val)
+			delete(m, field)
+		}
+	}
+
+	err = db.Model(&user).Updates(m).Error
 	return err, user
 }
 

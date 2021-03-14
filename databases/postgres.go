@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var postgresDb *gorm.DB //Database
@@ -24,11 +25,11 @@ func init() {
 		dbHost, dbUser, dbPort, dbName, dbPass,
 	)
 	if dbSslmode == "disable" {
-		dbUri = dbUri + "sslmode=disable"
+		dbUri = dbUri + " " + "sslmode=disable"
 	}
 	fmt.Println("dbUri: \t", dbUri)
 
-	conn, err := gorm.Open("postgres", dbUri)
+	conn, err := gorm.Open(postgres.Open(dbUri), &gorm.Config{})
 	if err != nil {
 		fmt.Print(err)
 	}
