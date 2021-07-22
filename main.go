@@ -14,7 +14,12 @@ func main() {
 	m := new(migrations.Migrations)
 	m.Sync()
 
-	router = gin.Default()
+	if os.Getenv("ENV") == "production" {
+		gin.SetMode(gin.ReleaseMode)
+		router = gin.New()
+	} else {
+		router = gin.Default()
+	}
 
 	initializeRoutes()
 
