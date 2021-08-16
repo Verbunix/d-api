@@ -5,9 +5,10 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"os"
 	"time"
+
+	"github.com/golang-jwt/jwt"
 )
 
 //Creating Access Token
